@@ -15,30 +15,17 @@
 
     <div class="row g-4 mb-4">
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body">
-                    <p class="text-muted mb-2">Current Balance</p>
-                    <h2 class="mb-0">@FormatCurrency(Dashboard.Balance)</h2>
-                </div>
-            </div>
+            <SummaryCard Title="Current Balance" Value="@FormatCurrency(Dashboard.Balance)" Subtext="Updated Today" />
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body">
-                    <p class="text-muted mb-2">Monthly Income</p>
-                    <h2 class="mb-0 text-success">@FormatCurrency(Dashboard.MonthlyIncome)</h2>
-                </div>
-            </div>
+            <SummaryCard Title="Monthly Income" Value="@FormatCurrency(Dashboard.MonthlyIncome)"
+                         NumericValue="Dashboard.MonthlyIncome" />
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body">
-                    <p class="text-muted mb-2">Monthly Expenses</p>
-                    <h2 class="mb-0 text-danger">@FormatCurrency(Dashboard.MonthlyExpenses)</h2>
-                </div>
-            </div>
+            <SummaryCard Title="Monthly Expenses" Value="@FormatCurrency(Dashboard.MonthlyExpenses)"
+                         NumericValue="-Dashboard.MonthlyExpenses" />
         </div>
     </div>
 
@@ -80,7 +67,9 @@
 
                         <div class="progress" role="progressbar" aria-label="Savings progress" aria-valuemin="0"
                              aria-valuemax="100">
-                            <div class="progress-bar bg-success" style="width: @(Dashboard.SavingsProgress)%"></div>
+                            <div class="progress-bar bg-success"
+                                 style="width: @(Dashboard.SavingsProgress.ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-between mt-2 text-muted small">
@@ -99,7 +88,7 @@
         Balance = 12540.75m,
         MonthlyIncome = 5200.00m,
         MonthlyExpenses = 2850.00m,
-        SavingsProgress = 72.5m,
+        SavingsProgress = 73.5m,
         Transactions =
         [
             new TransactionItem { Date = new DateTime(2026, 6, 28), Description = "Paycheck", Amount = 3200.00m, Category = "Income" },
