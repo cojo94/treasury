@@ -1,4 +1,4 @@
-namespace Treasury.Web.Models
+namespace Treasury.Application.Dashboard
 {
     public class TransactionItem
     {
