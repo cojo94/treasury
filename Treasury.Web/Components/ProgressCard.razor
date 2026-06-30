@@ -1,0 +1,24 @@
+@namespace Treasury.Web.Components
+
+<div class="card shadow-sm border-0 h-100">
+    <div class="card-body">
+        <h5 class="mb-3">Savings Goal</h5>
+        <p class="text-muted mb-3">You are on track with your monthly savings target.</p>
+
+        <div class="progress" role="progressbar" aria-label="Savings progress" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-success"
+                 style="width: @(SavingsProgress.ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2 text-muted small">
+            <span>Progress</span>
+            <span>@SavingsProgress%</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public decimal SavingsProgress { get; set; }
+}
