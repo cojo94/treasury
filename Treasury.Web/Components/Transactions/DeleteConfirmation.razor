@@ -1,0 +1,27 @@
+@if (Visible)
+{
+    <div class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+         style="background: rgba(0,0,0,0.35); z-index: 1050;">
+        <div class="card shadow-lg border-0" style="min-width: 320px;">
+            <div class="card-body">
+                <h5 class="card-title">Delete transaction?</h5>
+                <p class="text-muted mb-4">Are you sure? This action cannot be undone.</p>
+                <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" @onclick="OnCancel">Cancel</button>
+                    <button class="btn btn-danger btn-sm" @onclick="OnConfirm">Yes, delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool Visible { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+}

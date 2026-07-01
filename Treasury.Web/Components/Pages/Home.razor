@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using System.Globalization
-@using Treasury.Application.Dashboard
-@inject DashboardService DashboardService
+@inject IDashboardService DashboardService
 
 <PageTitle>Treasury Dashboard</PageTitle>
 
@@ -37,6 +36,11 @@
 
         <div class="col-lg-4">
             <ProgressCard SavingsProgress="Dashboard.SavingsProgress" />
+        </div>
+        <div>
+            <NavLink class="btn btn-primary" href="transactions">
+                View All Transactions
+            </NavLink>
         </div>
     </div>
 </div>

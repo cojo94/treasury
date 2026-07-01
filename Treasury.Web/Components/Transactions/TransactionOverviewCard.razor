@@ -1,0 +1,30 @@
+<div class="card shadow-sm border-0 h-100">
+    <div class="card-body">
+        <h5 class="card-title">Overview</h5>
+        <div class="d-flex justify-content-between py-2 border-bottom">
+            <span class="text-muted">Total entries</span>
+            <strong>@Transactions.Count</strong>
+        </div>
+        <div class="d-flex justify-content-between py-2 border-bottom">
+            <span class="text-muted">Income</span>
+            <strong class="text-success">@IncomeAmount.ToString("C0")</strong>
+        </div>
+        <div class="d-flex justify-content-between py-2 border-bottom">
+            <span class="text-muted">Expenses</span>
+            <strong class="text-danger">@ExpenseAmount.ToString("C0")</strong>
+        </div>
+        <div class="d-flex justify-content-between py-2">
+            <span class="text-muted">Net</span>
+            <strong class="@(NetAmount >= 0 ? "text-success" : "text-danger")">@NetAmount.ToString("C0")</strong>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required IReadOnlyList<TransactionItem> Transactions { get; set; }
+
+    private decimal IncomeAmount => Transactions.Where(t => t.Amount > 0).Sum(t => t.Amount);
+    private decimal ExpenseAmount => Transactions.Where(t => t.Amount < 0).Sum(t => t.Amount);
+    private decimal NetAmount => Transactions.Sum(t => t.Amount);
+}

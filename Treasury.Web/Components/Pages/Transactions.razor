@@ -1,0 +1,169 @@
+@page "/transactions"
+@rendermode InteractiveServer
+
+<PageTitle>Transactions</PageTitle>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Transactions</h1>
+            <p class="text-muted mb-0">Review, add, edit, and remove transactions in one place.</p>
+        </div>
+        <button class="btn btn-primary" @onclick="StartNewTransaction">
+            <i class="bi bi-plus-circle me-2"></i>Add Transaction
+        </button>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8">
+            <TransactionOverviewCard Transactions="transactions" />
+        </div>
+    </div>
+
+    @if (showForm)
+    {
+        <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.5);"
+             @onclick="ResetForm">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document" @onclick:stopPropagation="true">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <TransactionForm Model="formModel" IsEditing="isEditing" OnCancel="ResetForm"
+                                         OnSave="SaveTransaction" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <TransactionTable Transactions="SortedTransactions" OnEdit="EditTransaction" OnDelete="ConfirmDelete" />
+</div>
+
+<DeleteConfirmation Visible="showDeleteConfirmation" OnCancel="CancelDelete" OnConfirm="DeleteTransaction" />
+
+@code {
+    [Inject]
+    private IDashboardService DashboardService { get; set; } = default!;
+
+    private List<TransactionItem> transactions = [];
+    private List<TransactionItem> SortedTransactions => transactions
+        .OrderByDescending(t => t.Date)
+        .ToList();
+
+    private TransactionItem formModel = CreateTransaction();
+    private TransactionItem? editingTransaction;
+    private TransactionItem? transactionPendingDeletion;
+    private bool isEditing;
+    private bool showForm;
+    private bool showDeleteConfirmation;
+
+    protected override void OnInitialized()
+    {
+        RefreshTransactions();
+    }
+
+    private void StartNewTransaction()
+    {
+        formModel = CreateTransaction();
+        editingTransaction = null;
+        isEditing = false;
+        showForm = true;
+    }
+
+    private void EditTransaction(TransactionItem transaction)
+    {
+        editingTransaction = transaction;
+        formModel = new TransactionItem
+        {
+            Date = transaction.Date,
+            Description = transaction.Description,
+            Amount = transaction.Amount,
+            Category = transaction.Category
+        };
+        isEditing = true;
+        showForm = true;
+    }
+
+    private void SaveTransaction()
+    {
+        if (string.IsNullOrWhiteSpace(formModel.Description))
+        {
+            return;
+        }
+
+        if (isEditing && editingTransaction is not null)
+        {
+            editingTransaction.Date = formModel.Date;
+            editingTransaction.Description = formModel.Description;
+            editingTransaction.Amount = formModel.Amount;
+            editingTransaction.Category = formModel.Category;
+            DashboardService.UpdateTransaction(editingTransaction);
+            RefreshTransactions();
+        }
+        else
+        {
+            var newTransaction = new TransactionItem
+            {
+                Date = formModel.Date,
+                Description = formModel.Description,
+                Amount = formModel.Amount,
+                Category = formModel.Category
+            };
+
+            DashboardService.AddTransaction(newTransaction);
+            RefreshTransactions();
+        }
+
+        ResetForm();
+    }
+
+    private void ConfirmDelete(TransactionItem transaction)
+    {
+        transactionPendingDeletion = transaction;
+        showDeleteConfirmation = true;
+    }
+
+    private void DeleteTransaction()
+    {
+        if (transactionPendingDeletion is null)
+        {
+            return;
+        }
+
+        DashboardService.DeleteTransaction(transactionPendingDeletion);
+        RefreshTransactions();
+
+        if (editingTransaction == transactionPendingDeletion)
+        {
+            ResetForm();
+        }
+
+        CancelDelete();
+    }
+
+    private void CancelDelete()
+    {
+        transactionPendingDeletion = null;
+        showDeleteConfirmation = false;
+    }
+
+    private void ResetForm()
+    {
+        formModel = CreateTransaction();
+        editingTransaction = null;
+        isEditing = false;
+        showForm = false;
+    }
+
+    private void RefreshTransactions()
+    {
+        transactions = DashboardService.GetTransactions().ToList();
+    }
+
+    private static TransactionItem CreateTransaction() => new()
+    {
+        Date = DateTime.Today,
+        Description = string.Empty,
+        Amount = 0m,
+        Category = "Other"
+    };
+}
