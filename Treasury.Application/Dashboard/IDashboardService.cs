@@ -1,10 +1,12 @@
+using Treasury.Domain.Entities;
+
 namespace Treasury.Application.Dashboard;
 
 public interface IDashboardService
 {
     DashboardModel GetDashboard();
-    IReadOnlyList<TransactionItem> GetTransactions();
-    void AddTransaction(TransactionItem transaction);
-    void UpdateTransaction(TransactionItem transaction);
-    void DeleteTransaction(TransactionItem transaction);
+    IReadOnlyList<Transaction> GetTransactions();
+    void AddTransaction(Transaction transaction);
+    void UpdateTransaction(Transaction transaction);
+    void DeleteTransaction(Transaction transaction);
 }

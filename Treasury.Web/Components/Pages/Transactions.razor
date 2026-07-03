@@ -44,14 +44,14 @@
     [Inject]
     private IDashboardService DashboardService { get; set; } = default!;
 
-    private List<TransactionItem> transactions = [];
-    private List<TransactionItem> SortedTransactions => transactions
+    private List<Transaction> transactions = [];
+    private List<Transaction> SortedTransactions => transactions
         .OrderByDescending(t => t.Date)
         .ToList();
 
-    private TransactionItem formModel = CreateTransaction();
-    private TransactionItem? editingTransaction;
-    private TransactionItem? transactionPendingDeletion;
+    private Transaction formModel = CreateTransaction();
+    private Transaction? editingTransaction;
+    private Transaction? transactionPendingDeletion;
     private bool isEditing;
     private bool showForm;
     private bool showDeleteConfirmation;
@@ -69,10 +69,10 @@
         showForm = true;
     }
 
-    private void EditTransaction(TransactionItem transaction)
+    private void EditTransaction(Transaction transaction)
     {
         editingTransaction = transaction;
-        formModel = new TransactionItem
+        formModel = new Transaction
         {
             Date = transaction.Date,
             Description = transaction.Description,
@@ -101,7 +101,7 @@
         }
         else
         {
-            var newTransaction = new TransactionItem
+            var newTransaction = new Transaction
             {
                 Date = formModel.Date,
                 Description = formModel.Description,
@@ -116,7 +116,7 @@
         ResetForm();
     }
 
-    private void ConfirmDelete(TransactionItem transaction)
+    private void ConfirmDelete(Transaction transaction)
     {
         transactionPendingDeletion = transaction;
         showDeleteConfirmation = true;
@@ -159,7 +159,7 @@
         transactions = DashboardService.GetTransactions().ToList();
     }
 
-    private static TransactionItem CreateTransaction() => new()
+    private static Transaction CreateTransaction() => new()
     {
         Date = DateTime.Today,
         Description = string.Empty,

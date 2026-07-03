@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using System.Globalization
+@using Treasury.Web.Components.Dashboard
 @inject IDashboardService DashboardService
 
 <PageTitle>Treasury Dashboard</PageTitle>
@@ -29,9 +30,24 @@
         </div>
     </div>
 
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <SummaryCard Title="Budget Variance" Value="@FormatCurrency(Dashboard.BudgetSummary.NetDifference)"
+                         NumericValue="Dashboard.BudgetSummary.NetDifference" Subtext="Actual vs planned budget" />
+        </div>
+        <div class="col-md-4">
+            <SummaryCard Title="Planned Income" Value="@FormatCurrency(Dashboard.BudgetSummary.PlannedIncome)"
+                         Subtext="Monthly target" />
+        </div>
+        <div class="col-md-4">
+            <SummaryCard Title="Planned Expenses" Value="@FormatCurrency(Dashboard.BudgetSummary.PlannedExpenses)"
+                         NumericValue="-Dashboard.BudgetSummary.PlannedExpenses" Subtext="Monthly target" />
+        </div>
+    </div>
+
     <div class="row g-4">
         <div class="col-lg-8">
-            <TransactionList TransactionItems="Dashboard.Transactions" />
+            <TransactionList Transactions="Dashboard.Transactions" />
         </div>
 
         <div class="col-lg-4">

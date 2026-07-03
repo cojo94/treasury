@@ -22,7 +22,7 @@
 
 @code {
     [Parameter]
-    public required IReadOnlyList<TransactionItem> Transactions { get; set; }
+    public required IReadOnlyList<Transaction> Transactions { get; set; }
 
     private decimal IncomeAmount => Transactions.Where(t => t.Amount > 0).Sum(t => t.Amount);
     private decimal ExpenseAmount => Transactions.Where(t => t.Amount < 0).Sum(t => t.Amount);

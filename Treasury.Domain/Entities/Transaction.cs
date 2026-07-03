@@ -1,6 +1,6 @@
-namespace Treasury.Application.Dashboard
+namespace Treasury.Domain.Entities
 {
-    public class TransactionItem
+    public class Transaction
     {
         public DateTime Date { get; set; }
         public required string Description { get; set; }

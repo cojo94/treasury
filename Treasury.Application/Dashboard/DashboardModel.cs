@@ -1,3 +1,5 @@
+using Treasury.Domain.Entities;
+
 namespace Treasury.Application.Dashboard;
 
 public class DashboardModel
@@ -7,5 +9,6 @@ public class DashboardModel
     public decimal MonthlyExpenses { get; set; }
     public decimal SavingsProgress { get; set; }
 
-    public List<TransactionItem> Transactions { get; set; } = [];
+    public BudgetSummary BudgetSummary { get; set; } = new();
+    public List<Transaction> Transactions { get; set; } = [];
 }
