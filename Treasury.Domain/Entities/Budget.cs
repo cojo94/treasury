@@ -2,6 +2,7 @@ namespace Treasury.Domain.Entities;
 
 public class Budget
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 
