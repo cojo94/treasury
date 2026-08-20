@@ -11,7 +11,7 @@
             <h1 class="h2 fw-bold mb-1">Treasury Dashboard</h1>
             <p class="text-muted mb-0">A quick snapshot of your finances.</p>
         </div>
-        <span class="badge bg-success-subtle text-success-emphasis">Mock data</span>
+        @* <span class="badge bg-success-subtle text-success-emphasis">Mock data</span> *@
     </div>
 
     <div class="row g-4 mb-4">
@@ -66,9 +66,9 @@
 @code {
     private DashboardModel Dashboard { get; set; } = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Dashboard = DashboardService.GetDashboard();
+        Dashboard = await DashboardService.GetDashboardAsync();
     }
 
 

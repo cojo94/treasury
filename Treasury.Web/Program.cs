@@ -1,6 +1,7 @@
 using Treasury.Application.Dashboard;
 using Treasury.Application.Transactions;
 using Treasury.Infrastructure.Repositories;
+using Treasury.Infrastructure.Data;
 using Treasury.Web.Components;
 using Treasury.Infrastructure;
 
@@ -17,6 +18,12 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<TreasuryDbSeeder>();
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

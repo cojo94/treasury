@@ -13,6 +13,8 @@ public static class DependencyInjection
         services.AddDbContext<TreasuryDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+        services.AddScoped<TreasuryDbSeeder>();
+
         return services;
     }
 }

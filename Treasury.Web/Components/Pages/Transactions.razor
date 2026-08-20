@@ -1,5 +1,7 @@
 @page "/transactions"
 @rendermode InteractiveServer
+@using Treasury.Application.Transactions
+@using Treasury.Domain.Entities
 
 <PageTitle>Transactions</PageTitle>
 
@@ -42,7 +44,7 @@
 
 @code {
     [Inject]
-    private IDashboardService DashboardService { get; set; } = default!;
+    private ITransactionService TransactionService { get; set; } = default!;
 
     private List<Transaction> transactions = [];
     private List<Transaction> SortedTransactions => transactions
@@ -56,9 +58,9 @@
     private bool showForm;
     private bool showDeleteConfirmation;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        RefreshTransactions();
+        await RefreshTransactionsAsync();
     }
 
     private void StartNewTransaction()
@@ -83,7 +85,7 @@
         showForm = true;
     }
 
-    private void SaveTransaction()
+    private async Task SaveTransaction()
     {
         if (string.IsNullOrWhiteSpace(formModel.Description))
         {
@@ -96,8 +98,8 @@
             editingTransaction.Description = formModel.Description;
             editingTransaction.Amount = formModel.Amount;
             editingTransaction.Category = formModel.Category;
-            DashboardService.UpdateTransaction(editingTransaction);
-            RefreshTransactions();
+            await TransactionService.UpdateTransactionAsync(editingTransaction);
+            await RefreshTransactionsAsync();
         }
         else
         {
@@ -109,8 +111,8 @@
                 Category = formModel.Category
             };
 
-            DashboardService.AddTransaction(newTransaction);
-            RefreshTransactions();
+            await TransactionService.AddTransactionAsync(newTransaction);
+            await RefreshTransactionsAsync();
         }
 
         ResetForm();
@@ -122,15 +124,15 @@
         showDeleteConfirmation = true;
     }
 
-    private void DeleteTransaction()
+    private async Task DeleteTransaction()
     {
         if (transactionPendingDeletion is null)
         {
             return;
         }
 
-        DashboardService.DeleteTransaction(transactionPendingDeletion);
-        RefreshTransactions();
+        await TransactionService.DeleteTransactionAsync(transactionPendingDeletion);
+        await RefreshTransactionsAsync();
 
         if (editingTransaction == transactionPendingDeletion)
         {
@@ -154,14 +156,14 @@
         showForm = false;
     }
 
-    private void RefreshTransactions()
+    private async Task RefreshTransactionsAsync()
     {
-        transactions = DashboardService.GetTransactions().ToList();
+        transactions = (await TransactionService.GetTransactionsAsync()).ToList();
     }
 
     private static Transaction CreateTransaction() => new()
     {
-        Date = DateTime.Today,
+        Date = DateTime.UtcNow,
         Description = string.Empty,
         Amount = 0m,
         Category = "Other"
