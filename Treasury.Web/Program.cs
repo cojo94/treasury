@@ -1,4 +1,6 @@
 using Treasury.Application.Dashboard;
+using Treasury.Application.Transactions;
+using Treasury.Infrastructure.Repositories;
 using Treasury.Web.Components;
 using Treasury.Infrastructure;
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 // Add DbContext with PostgreSQL configuration.
 builder.Services.AddInfrastructure(builder.Configuration);
