@@ -1,4 +1,5 @@
 using Treasury.Domain.Entities;
+using Treasury.Application.Budgets;
 
 namespace Treasury.Application.Dashboard;
 

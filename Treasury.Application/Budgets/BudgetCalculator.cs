@@ -1,8 +1,8 @@
 using Treasury.Domain.Entities;
 
-namespace Treasury.Application.Dashboard;
+namespace Treasury.Application.Budgets;
 
-public static class BudgetService
+public static class BudgetCalculator
 {
     public static BudgetSummary CalculateBudgetSummary(
         IEnumerable<Transaction> transactions,

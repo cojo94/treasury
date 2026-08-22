@@ -1,5 +1,6 @@
 using Treasury.Application.Dashboard;
 using Treasury.Application.Transactions;
+using Treasury.Application.Budgets;
 using Treasury.Infrastructure.Repositories;
 using Treasury.Infrastructure.Data;
 using Treasury.Web.Components;
@@ -13,6 +14,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
 
 // Add DbContext with PostgreSQL configuration.
 builder.Services.AddInfrastructure(builder.Configuration);
