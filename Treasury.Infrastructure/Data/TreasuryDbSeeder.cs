@@ -13,6 +13,12 @@ public class TreasuryDbSeeder
 
     public async Task SeedAsync()
     {
+        await SeedTransactionsAsync();
+        await SeedBudgetsAsync();
+    }
+
+    private async Task SeedTransactionsAsync()
+    {
         if (!await _context.Transactions.AnyAsync())
         {
             var transactions = new List<Transaction>
@@ -82,6 +88,25 @@ public class TreasuryDbSeeder
             }
             };
             await _context.Transactions.AddRangeAsync(transactions);
+            await _context.SaveChangesAsync();
+        }
+    }
+    private async Task SeedBudgetsAsync()
+    {
+        if (!await _context.Budgets.AnyAsync())
+        {
+            var budgets = new List<Budget>
+            {
+                new Budget
+                {
+                    StartDate = new DateTime(2026, 6, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2026, 6, 30, 0, 0, 0, DateTimeKind.Utc),
+                    PlannedIncome = 5000.00m,
+                    PlannedExpenses = 3500.00m,
+                    SavingsGoal = 1000.00m
+                }
+            };
+            await _context.Budgets.AddRangeAsync(budgets);
             await _context.SaveChangesAsync();
         }
     }
