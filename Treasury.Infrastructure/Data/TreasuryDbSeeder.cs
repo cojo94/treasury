@@ -104,6 +104,22 @@ public class TreasuryDbSeeder
                     PlannedIncome = 5000.00m,
                     PlannedExpenses = 3500.00m,
                     SavingsGoal = 1000.00m
+                },
+                new Budget
+                {
+                    StartDate = new DateTime(2026, 7, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2026, 7, 31, 0, 0, 0, DateTimeKind.Utc),
+                    PlannedIncome = 5200.00m,
+                    PlannedExpenses = 3600.00m,
+                    SavingsGoal = 1200.00m
+                },
+                new Budget
+                {
+                    StartDate = new DateTime(2026, 8, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndDate = new DateTime(2026, 8, 31, 0, 0, 0, DateTimeKind.Utc),
+                    PlannedIncome = 5400.00m,
+                    PlannedExpenses = 3700.00m,
+                    SavingsGoal = 1300.00m
                 }
             };
             await _context.Budgets.AddRangeAsync(budgets);
