@@ -30,11 +30,32 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">@budget.StartDate.ToString("MMMM yyyy")</h5>
+                            <h5 class="card-title border-bottom">@budget.StartDate.ToString("MMMM yyyy")</h5>
                             <p class="card-text">Budget Period: @budget.StartDate.ToString("MMMM dd") -
                                 @budget.EndDate.ToString("MMMM dd")</p>
-                                <p class="card-text">Income: @budgetSummaries[budget.Id].ActualIncome / @budget.PlannedIncome</p>
-                                <p class="card-text">Expenses: @budgetSummaries[budget.Id].ActualExpenses / @budget.PlannedExpenses</p>
+                                <div>
+                                    <p class="card-text">Income: @budgetSummaries[budget.Id].ActualIncome / @budget.PlannedIncome
+                                    </p>
+                                    <div class="progress mb-2" role="progressbar" aria-label="Income progress" aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         aria-valuenow="@(budgetSummaries[budget.Id].ActualIncome / budget.PlannedIncome * 100)">
+                                        <div class="progress-bar bg-success"
+                                             style="width: @((budgetSummaries[budget.Id].ActualIncome / budget.PlannedIncome * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="card-text">Expenses: @budgetSummaries[budget.Id].ActualExpenses /
+                                        @budget.PlannedExpenses
+                                    </p>
+                                    <div class="progress mb-2" role="progressbar" aria-label="Expenses progress" aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         aria-valuenow="@((budgetSummaries[budget.Id].ActualExpenses / budget.PlannedExpenses * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))">
+                                        <div class="progress-bar bg-danger"
+                                             style="width: @((budgetSummaries[budget.Id].ActualExpenses / budget.PlannedExpenses * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+                                        </div>
+                                    </div>
+                                </div>
                                 <p class="card-text">Net Difference: @budgetSummaries[budget.Id].NetDifference</p>
                                 <p class="card-text">Savings Goal: @budget.SavingsGoal</p>
                                 <button class="btn btn-primary">View Budget</button>
