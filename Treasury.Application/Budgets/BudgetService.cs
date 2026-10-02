@@ -31,11 +31,21 @@ public class BudgetService : IBudgetService
             throw new ArgumentException($"Budget with ID {budgetId} not found.");
         }
 
-        var transactions = await _transactionRepository.GetTransactionsAsync();
-
-        var budgetTransactions = transactions.Where(t => t.Date >= budget.StartDate && t.Date <= budget.EndDate).ToList();
+        var budgetTransactions = await GetBudgetTransactionsAsync(budgetId);
 
         return BudgetCalculator.CalculateBudgetSummary(budgetTransactions, budget.PlannedIncome, budget.PlannedExpenses);
+    }
+
+    public async Task<IReadOnlyList<Transaction>> GetBudgetTransactionsAsync(Guid budgetId)
+    {
+        var budget = await _budgetRepository.GetBudgetByIdAsync(budgetId);
+        if (budget == null)
+        {
+            throw new ArgumentException($"Budget with ID {budgetId} not found.");
+        }
+
+        var transactions = await _transactionRepository.GetTransactionsAsync();
+        return transactions.Where(t => t.Date >= budget.StartDate && t.Date <= budget.EndDate).ToList();
     }
 
     public async Task AddBudgetAsync(Budget budget)

@@ -58,7 +58,7 @@
                                 </div>
                                 <p class="card-text">Net Difference: @budgetSummaries[budget.Id].NetDifference</p>
                                 <p class="card-text">Savings Goal: @budget.SavingsGoal</p>
-                                <button class="btn btn-primary">View Budget</button>
+                                <NavLink class="btn btn-secondary ms-2" href="@($"/budgets/{budget.Id}")">View Budget</NavLink>
                             </div>
                         </div>
                     </div>

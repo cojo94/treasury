@@ -1,0 +1,73 @@
+@page "/budgets/{BudgetId}"
+@rendermode InteractiveServer
+@using Treasury.Application.Budgets
+
+<PageTitle>Budget Details</PageTitle>
+
+@if (budget == null)
+{
+    <div class="alert alert-info" role="alert">
+        Loading budget details...
+    </div>
+}
+else
+{
+    <div class="container py-4">
+        <h1 class="h3 mb-1">Budget Details</h1>
+        <p class="text-muted mb-4">Details for the budget period: @budget.StartDate.ToString("MMMM yyyy")</p>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title border-bottom">Budget Period: @budget.StartDate.ToString("MMMM dd") -
+                    @budget.EndDate.ToString("MMMM dd")</h5>
+                    <p class="card-text">Planned Income: @budget.PlannedIncome</p>
+                    <p class="card-text">Planned Expenses: @budget.PlannedExpenses</p>
+                    <p class="card-text">Actual Income: @budgetSummary?.ActualIncome</p>
+                    <p class="card-text">Actual Expenses: @budgetSummary?.ActualExpenses</p>
+                    <p class="card-text">Net Difference: @budgetSummary?.NetDifference</p>
+                    <p class="card-text">Savings Goal: @budget.SavingsGoal</p>
+                    <h5 class="card-title border-bottom mt-4">Transactions</h5>
+                    @if (budgetTransactions.Count == 0)
+                    {
+                        <p class="text-muted">No transactions found for this budget period.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var transaction in budgetTransactions)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>@transaction.Date.ToString("MMMM dd")</strong> - @transaction.Description
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">@transaction.Amount</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+
+            <!-- Additional budget details can be added here -->
+        </div>
+    }
+
+@code {
+    [Parameter]
+    public string BudgetId { get; set; } = string.Empty;
+    [Inject]
+    public IBudgetService BudgetService { get; set; } = default!;
+    private Budget? budget;
+    private BudgetSummary? budgetSummary;
+    private IReadOnlyList<Transaction> budgetTransactions = new List<Transaction>();
+    protected override async Task OnInitializedAsync()
+    {
+        if (Guid.TryParse(BudgetId, out var parsedBudgetId))
+        {
+            budget = await BudgetService.GetBudgetByIdAsync(parsedBudgetId);
+            budgetSummary = await BudgetService.GetBudgetSummaryAsync(parsedBudgetId);
+            budgetTransactions = await BudgetService.GetBudgetTransactionsAsync(parsedBudgetId);
+        }
+    }
+    
+}
