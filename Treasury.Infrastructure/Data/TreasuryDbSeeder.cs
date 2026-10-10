@@ -5,21 +5,23 @@ namespace Treasury.Infrastructure.Data;
 
 public class TreasuryDbSeeder
 {
-    private readonly TreasuryDbContext _context;
-    public TreasuryDbSeeder(TreasuryDbContext context)
+    private readonly IDbContextFactory<TreasuryDbContext> _factory;
+
+    public TreasuryDbSeeder(IDbContextFactory<TreasuryDbContext> factory)
     {
-        _context = context;
+        _factory = factory;
     }
 
     public async Task SeedAsync()
     {
-        await SeedTransactionsAsync();
-        await SeedBudgetsAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        await SeedTransactionsAsync(context);
+        await SeedBudgetsAsync(context);
     }
 
-    private async Task SeedTransactionsAsync()
+    private async Task SeedTransactionsAsync(TreasuryDbContext context)
     {
-        if (!await _context.Transactions.AnyAsync())
+        if (!await context.Transactions.AnyAsync())
         {
             var transactions = new List<Transaction>
             {
@@ -87,13 +89,13 @@ public class TreasuryDbSeeder
                 Category = "Food"
             }
             };
-            await _context.Transactions.AddRangeAsync(transactions);
-            await _context.SaveChangesAsync();
+            await context.Transactions.AddRangeAsync(transactions);
+            await context.SaveChangesAsync();
         }
     }
-    private async Task SeedBudgetsAsync()
+    private async Task SeedBudgetsAsync(TreasuryDbContext context)
     {
-        if (!await _context.Budgets.AnyAsync())
+        if (!await context.Budgets.AnyAsync())
         {
             var budgets = new List<Budget>
             {
@@ -122,8 +124,8 @@ public class TreasuryDbSeeder
                     SavingsGoal = 1300.00m
                 }
             };
-            await _context.Budgets.AddRangeAsync(budgets);
-            await _context.SaveChangesAsync();
+            await context.Budgets.AddRangeAsync(budgets);
+            await context.SaveChangesAsync();
         }
     }
 }

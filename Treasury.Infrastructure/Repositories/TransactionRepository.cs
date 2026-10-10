@@ -7,32 +7,36 @@ namespace Treasury.Infrastructure.Repositories;
 
 public class TransactionRepository : ITransactionRepository
 {
-    private readonly TreasuryDbContext _context;
-    public TransactionRepository(TreasuryDbContext context)
+    private readonly IDbContextFactory<TreasuryDbContext> _factory;
+    public TransactionRepository(IDbContextFactory<TreasuryDbContext> factory)
     {
-        _context = context;
+        _factory = factory;
     }
 
     public async Task<IReadOnlyList<Transaction>> GetTransactionsAsync()
     {
-        return await _context.Transactions.ToListAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        return await context.Transactions.AsNoTracking().ToListAsync();
     }
 
     public async Task AddTransactionAsync(Transaction transaction)
     {
-        await _context.Transactions.AddAsync(transaction);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        await context.Transactions.AddAsync(transaction);
+        await context.SaveChangesAsync();
     }
 
     public async Task UpdateTransactionAsync(Transaction transaction)
     {
-        _context.Transactions.Update(transaction);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        context.Transactions.Update(transaction);
+        await context.SaveChangesAsync();
     }
 
     public async Task DeleteTransactionAsync(Transaction transaction)
     {
-        _context.Transactions.Remove(transaction);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        context.Transactions.Remove(transaction);
+        await context.SaveChangesAsync();
     }
 }

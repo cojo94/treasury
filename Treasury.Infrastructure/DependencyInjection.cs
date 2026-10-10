@@ -9,8 +9,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Add DbContext with PostgreSQL configuration.
-        services.AddDbContext<TreasuryDbContext>(options =>
+        // Add DbContextFactory for thread-safe DbContext creation
+        services.AddDbContextFactory<TreasuryDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<TreasuryDbSeeder>();

@@ -7,33 +7,38 @@ namespace Treasury.Infrastructure.Repositories;
 
 public class BudgetRepository : IBudgetRepository
 {
-    private readonly TreasuryDbContext _context;
-    public BudgetRepository(TreasuryDbContext context)
+    private readonly IDbContextFactory<TreasuryDbContext> _factory;
+    public BudgetRepository(IDbContextFactory<TreasuryDbContext> factory)
     {
-        _context = context;
+        _factory = factory;
     }
 
     public async Task<IReadOnlyList<Budget>> GetBudgetsAsync()
     {
-        return await _context.Budgets.ToListAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        return await context.Budgets.AsNoTracking().ToListAsync();
     }
     public async Task<Budget?> GetBudgetByIdAsync(Guid budgetId)
     {
-        return await _context.Budgets.FindAsync(budgetId);
+        await using var context = await _factory.CreateDbContextAsync();
+        return await context.Budgets.AsNoTracking().FirstOrDefaultAsync(b => b.Id == budgetId);
     }
     public async Task AddBudgetAsync(Budget budget)
     {
-        await _context.Budgets.AddAsync(budget);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        await context.Budgets.AddAsync(budget);
+        await context.SaveChangesAsync();
     }
     public async Task UpdateBudgetAsync(Budget budget)
     {
-        _context.Budgets.Update(budget);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        context.Budgets.Update(budget);
+        await context.SaveChangesAsync();
     }
     public async Task DeleteBudgetAsync(Budget budget)
     {
-        _context.Budgets.Remove(budget);
-        await _context.SaveChangesAsync();
+        await using var context = await _factory.CreateDbContextAsync();
+        context.Budgets.Remove(budget);
+        await context.SaveChangesAsync();
     }
 }
