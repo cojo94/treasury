@@ -13,53 +13,52 @@ public class BudgetService : IBudgetService
         _transactionRepository = transactionRepository;
     }
 
-    public async Task<IReadOnlyList<Budget>> GetBudgetsAsync()
+    public Task<IReadOnlyList<Budget>> GetBudgetsAsync()
     {
-        return await _budgetRepository.GetBudgetsAsync();
+        return _budgetRepository.GetBudgetsAsync();
     }
 
-    public async Task<Budget?> GetBudgetByIdAsync(Guid budgetId)
+    public Task<Budget?> GetBudgetByIdAsync(Guid budgetId)
     {
-        return await _budgetRepository.GetBudgetByIdAsync(budgetId);
+        return _budgetRepository.GetBudgetByIdAsync(budgetId);
     }
 
-    public async Task<BudgetSummary> GetBudgetSummaryAsync(Guid budgetId)
+    public async Task<BudgetSummary> GetBudgetSummaryAsync(Budget budget)
     {
-        var budget = await _budgetRepository.GetBudgetByIdAsync(budgetId);
-        if (budget == null)
-        {
-            throw new ArgumentException($"Budget with ID {budgetId} not found.");
-        }
+        ArgumentNullException.ThrowIfNull(budget);
 
-        var budgetTransactions = await GetBudgetTransactionsAsync(budgetId);
+        var budgetTransactions = await GetBudgetTransactionsAsync(budget);
 
-        return BudgetCalculator.CalculateBudgetSummary(budgetTransactions, budget.PlannedIncome, budget.PlannedExpenses);
+        return CalculateBudgetSummary(budget, budgetTransactions);
     }
 
-    public async Task<IReadOnlyList<Transaction>> GetBudgetTransactionsAsync(Guid budgetId)
+    public BudgetSummary CalculateBudgetSummary(Budget budget, IReadOnlyList<Transaction> transactions)
     {
-        var budget = await _budgetRepository.GetBudgetByIdAsync(budgetId);
-        if (budget == null)
-        {
-            throw new ArgumentException($"Budget with ID {budgetId} not found.");
-        }
+        ArgumentNullException.ThrowIfNull(budget);
+        ArgumentNullException.ThrowIfNull(transactions);
 
-        var transactions = await _transactionRepository.GetTransactionsAsync();
-        return transactions.Where(t => t.Date >= budget.StartDate && t.Date <= budget.EndDate).ToList();
+        return BudgetCalculator.CalculateBudgetSummary(transactions, budget.PlannedIncome, budget.PlannedExpenses);
     }
 
-    public async Task AddBudgetAsync(Budget budget)
+    public Task<IReadOnlyList<Transaction>> GetBudgetTransactionsAsync(Budget budget)
     {
-        await _budgetRepository.AddBudgetAsync(budget);
+        ArgumentNullException.ThrowIfNull(budget);
+
+        return _transactionRepository.GetTransactionsByDateRangeAsync(budget.StartDate, budget.EndDate);
     }
 
-    public async Task UpdateBudgetAsync(Budget budget)
+    public Task AddBudgetAsync(Budget budget)
     {
-        await _budgetRepository.UpdateBudgetAsync(budget);
+        return _budgetRepository.AddBudgetAsync(budget);
     }
 
-    public async Task DeleteBudgetAsync(Budget budget)
+    public Task UpdateBudgetAsync(Budget budget)
     {
-        await _budgetRepository.DeleteBudgetAsync(budget);
+        return _budgetRepository.UpdateBudgetAsync(budget);
+    }
+
+    public Task DeleteBudgetAsync(Budget budget)
+    {
+        return _budgetRepository.DeleteBudgetAsync(budget);
     }
 }

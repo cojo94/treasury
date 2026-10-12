@@ -65,8 +65,12 @@ else
         if (Guid.TryParse(BudgetId, out var parsedBudgetId))
         {
             budget = await BudgetService.GetBudgetByIdAsync(parsedBudgetId);
-            budgetSummary = await BudgetService.GetBudgetSummaryAsync(parsedBudgetId);
-            budgetTransactions = await BudgetService.GetBudgetTransactionsAsync(parsedBudgetId);
+
+            if (budget is not null)
+            {
+                budgetTransactions = await BudgetService.GetBudgetTransactionsAsync(budget);
+                budgetSummary = BudgetService.CalculateBudgetSummary(budget, budgetTransactions);
+            }
         }
     }
     

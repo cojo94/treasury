@@ -19,6 +19,15 @@ public class TransactionRepository : ITransactionRepository
         return await context.Transactions.AsNoTracking().ToListAsync();
     }
 
+    public async Task<IReadOnlyList<Transaction>> GetTransactionsByDateRangeAsync(DateTime startDate, DateTime endDate)
+    {
+        await using var context = await _factory.CreateDbContextAsync();
+        return await context.Transactions
+            .AsNoTracking()
+            .Where(t => t.Date >= startDate && t.Date <= endDate)
+            .ToListAsync();
+    }
+
     public async Task AddTransactionAsync(Transaction transaction)
     {
         await using var context = await _factory.CreateDbContextAsync();

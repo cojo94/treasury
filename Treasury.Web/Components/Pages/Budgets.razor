@@ -79,7 +79,7 @@
         List<Budget> loadedBudgets = (await BudgetService.GetBudgetsAsync()).ToList();
         foreach (var budget in loadedBudgets)
         {
-            var summary = await BudgetService.GetBudgetSummaryAsync(budget.Id);
+            var summary = await BudgetService.GetBudgetSummaryAsync(budget);
             budgetSummaries[budget.Id] = summary;
         }
         budgets = loadedBudgets;

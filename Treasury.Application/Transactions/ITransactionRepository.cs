@@ -5,6 +5,7 @@ namespace Treasury.Application.Transactions;
 public interface ITransactionRepository
 {
     Task<IReadOnlyList<Transaction>> GetTransactionsAsync();
+    Task<IReadOnlyList<Transaction>> GetTransactionsByDateRangeAsync(DateTime startDate, DateTime endDate);
     Task AddTransactionAsync(Transaction transaction);
     Task UpdateTransactionAsync(Transaction transaction);
     Task DeleteTransactionAsync(Transaction transaction);
