@@ -44,7 +44,17 @@ public class BudgetService : IBudgetService
     {
         ArgumentNullException.ThrowIfNull(budget);
 
-        return _transactionRepository.GetTransactionsByDateRangeAsync(budget.StartDate, budget.EndDate);
+        var startDate = budget.StartDate.ToDateTime(
+        TimeOnly.MinValue,
+        DateTimeKind.Utc);
+
+        var endDate = budget.EndDate
+            .AddDays(1)
+            .ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+
+        return _transactionRepository.GetTransactionsByDateRangeAsync(
+            startDate,
+            endDate);
     }
 
     public Task AddBudgetAsync(Budget budget)

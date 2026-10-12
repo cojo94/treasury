@@ -82,6 +82,9 @@
         {
             return;
         }
+        formModel.Date = DateTime.SpecifyKind(
+            formModel.Date,
+            DateTimeKind.Utc);
 
         if (isEditing && editingTransaction is not null)
         {
@@ -101,6 +104,8 @@
                 Amount = formModel.Amount,
                 Category = formModel.Category
             };
+
+            
 
             await TransactionService.AddTransactionAsync(newTransaction);
             await RefreshTransactionsAsync();

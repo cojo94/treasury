@@ -24,7 +24,7 @@ public class TransactionRepository : ITransactionRepository
         await using var context = await _factory.CreateDbContextAsync();
         return await context.Transactions
             .AsNoTracking()
-            .Where(t => t.Date >= startDate && t.Date <= endDate)
+            .Where(t => t.Date >= startDate && t.Date < endDate)
             .ToListAsync();
     }
 

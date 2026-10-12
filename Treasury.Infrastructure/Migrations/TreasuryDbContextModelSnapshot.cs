@@ -28,8 +28,8 @@ namespace Treasury.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
 
                     b.Property<decimal>("PlannedExpenses")
                         .HasColumnType("numeric");
@@ -40,8 +40,8 @@ namespace Treasury.Infrastructure.Migrations
                     b.Property<decimal>("SavingsGoal")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
