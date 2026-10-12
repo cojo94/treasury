@@ -1,23 +1,29 @@
-@if (Visible)
-{
-    <div class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-         style="background: rgba(0,0,0,0.35); z-index: 1050;">
-        <div class="card shadow-lg border-0" style="min-width: 320px;">
-            <div class="card-body">
-                <h5 class="card-title">Delete transaction?</h5>
-                <p class="text-muted mb-4">Are you sure? This action cannot be undone.</p>
-                <div class="d-flex justify-content-end gap-2">
-                    <button class="btn btn-outline-secondary btn-sm" @onclick="OnCancel">Cancel</button>
-                    <button class="btn btn-danger btn-sm" @onclick="OnConfirm">Yes, delete</button>
-                </div>
-            </div>
+<Modal Title="@Title" Visible="Visible" OnClose="OnCancel">
+    <div class="p-4">
+        <p class="text-muted mb-4">
+            @Message
+        </p>
+
+        <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-outline-secondary btn-sm" @onclick="OnCancel">
+                Cancel
+            </button>
+            <button class="btn btn-danger btn-sm" @onclick="OnConfirm">
+                @ConfirmText
+            </button>
         </div>
     </div>
-}
+</Modal>
 
 @code {
     [Parameter]
     public bool Visible { get; set; }
+    [Parameter]
+    public string Title { get; set; } = "Confirm Deletion";
+    [Parameter]
+    public string Message { get; set; } = "Are you sure? This action cannot be undone.";
+    [Parameter]
+    public string ConfirmText { get; set; } = "Yes, delete";
 
     [Parameter]
     public EventCallback OnCancel { get; set; }

@@ -22,25 +22,16 @@
         </div>
     </div>
 
-    @if (showForm)
-    {
-        <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.5);"
-             @onclick="ResetForm">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document" @onclick:stopPropagation="true">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <TransactionForm Model="formModel" IsEditing="isEditing" OnCancel="ResetForm"
-                                         OnSave="SaveTransaction" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+    <Modal Title="@(isEditing ? "Edit Transaction" : "New Transaction")" Visible="showForm" OnClose="ResetForm">
+        <TransactionForm Model="formModel" IsEditing="isEditing" OnCancel="ResetForm" OnSave="SaveTransaction" />
+    </Modal>
 
     <TransactionTable Transactions="SortedTransactions" OnEdit="EditTransaction" OnDelete="ConfirmDelete" />
 </div>
 
-<DeleteConfirmation Visible="showDeleteConfirmation" OnCancel="CancelDelete" OnConfirm="DeleteTransaction" />
+<DeleteConfirmation Visible="showDeleteConfirmation" Title="Delete Transaction?"
+                    Message="Are you sure you want to delete this transaction? This action cannot be undone." OnCancel="CancelDelete"
+                    OnConfirm="DeleteTransaction" />
 
 @code {
     [Inject]
