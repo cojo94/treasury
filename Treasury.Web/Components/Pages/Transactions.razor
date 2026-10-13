@@ -62,6 +62,14 @@
         showForm = true;
     }
 
+    private static Transaction CreateTransaction() => new()
+    {
+        Date = DateTime.UtcNow,
+        Description = string.Empty,
+        Amount = 0m,
+        Category = "Other"
+    };
+
     private void EditTransaction(Transaction transaction)
     {
         editingTransaction = transaction;
@@ -157,11 +165,5 @@
         transactions = (await TransactionService.GetTransactionsAsync()).ToList();
     }
 
-    private static Transaction CreateTransaction() => new()
-    {
-        Date = DateTime.UtcNow,
-        Description = string.Empty,
-        Amount = 0m,
-        Category = "Other"
-    };
+    
 }

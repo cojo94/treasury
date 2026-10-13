@@ -1,7 +1,7 @@
 @if (Visible)
 {
     <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.5);"
-         @onclick="OnClose">
+         @onkeydown="HandleKeyDown" @ref="modalElement">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document" @onclick:stopPropagation="true">
             <div class="modal-content">
                 <div class="modal-header">
@@ -29,4 +29,37 @@
 
     [Parameter]
     public EventCallback OnClose { get; set; }
+
+
+    private ElementReference modalElement;
+    private bool wasVisible;
+    
+    protected override void OnParametersSet()
+    {
+        if (Visible && !wasVisible)
+        {
+            shouldFocus = true;
+        }
+
+        wasVisible = Visible;
+    }
+
+    private bool shouldFocus;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (shouldFocus && Visible)
+        {
+            shouldFocus = false;
+            await modalElement.FocusAsync();
+        }
+    }
+    
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
 }

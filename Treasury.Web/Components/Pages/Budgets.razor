@@ -59,6 +59,7 @@
                                 <p class="card-text">Net Difference: @budgetSummaries[budget.Id].NetDifference</p>
                                 <p class="card-text">Savings Goal: @budget.SavingsGoal</p>
                                 <NavLink class="btn btn-secondary ms-2" href="@($"/budgets/{budget.Id}")">View Budget</NavLink>
+                                <button class="btn btn-outline-primary ms-2" @onclick="@(() => EditBudget(budget))">Edit</button>
                                 <button class="btn btn-outline-danger ms-2"
                                         @onclick="@(() => ConfirmDelete(budget))">Delete</button>
                             </div>
@@ -115,6 +116,21 @@
             PlannedExpenses = 0,
             SavingsGoal = 0
         };
+    }
+
+    private void EditBudget(Budget budget)
+    {
+        editingBudget = budget;
+        formModel = new Budget
+        {
+            StartDate = budget.StartDate,
+            EndDate = budget.EndDate,
+            PlannedIncome = budget.PlannedIncome,
+            PlannedExpenses = budget.PlannedExpenses,
+            SavingsGoal = budget.SavingsGoal
+        };
+        isEditing = true;
+        showForm = true;
     }
 
     private async Task SaveBudget()
