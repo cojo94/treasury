@@ -57,13 +57,25 @@ public class BudgetService : IBudgetService
             endDate);
     }
 
+    private static void ValidateBudget(Budget budget)
+    {
+        ArgumentNullException.ThrowIfNull(budget);
+
+        if (budget.StartDate > budget.EndDate)
+        {
+            throw new ArgumentException("Budget start date must be on or before the end date", nameof(budget));
+        }
+    }
+
     public Task AddBudgetAsync(Budget budget)
     {
+        ValidateBudget(budget);
         return _budgetRepository.AddBudgetAsync(budget);
     }
 
     public Task UpdateBudgetAsync(Budget budget)
     {
+        ValidateBudget(budget);
         return _budgetRepository.UpdateBudgetAsync(budget);
     }
 

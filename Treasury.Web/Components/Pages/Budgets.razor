@@ -38,9 +38,9 @@
                                     </p>
                                     <div class="progress mb-2" role="progressbar" aria-label="Income progress" aria-valuemin="0"
                                          aria-valuemax="100"
-                                         aria-valuenow="@(budgetSummaries[budget.Id].ActualIncome / budget.PlannedIncome * 100)">
+                                         aria-valuenow="@(CalculateProgress(budgetSummaries[budget.Id].ActualIncome, budget.PlannedIncome))">
                                         <div class="progress-bar bg-success"
-                                             style="width: @((budgetSummaries[budget.Id].ActualIncome / budget.PlannedIncome * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+                                             style="width: @((CalculateProgress(budgetSummaries[budget.Id].ActualIncome, budget.PlannedIncome)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
                                         </div>
                                     </div>
                                 </div>
@@ -50,9 +50,9 @@
                                     </p>
                                     <div class="progress mb-2" role="progressbar" aria-label="Expenses progress" aria-valuemin="0"
                                          aria-valuemax="100"
-                                         aria-valuenow="@((budgetSummaries[budget.Id].ActualExpenses / budget.PlannedExpenses * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))">
+                                         aria-valuenow="@(CalculateProgress(budgetSummaries[budget.Id].ActualExpenses, budget.PlannedExpenses))">
                                         <div class="progress-bar bg-danger"
-                                             style="width: @((budgetSummaries[budget.Id].ActualExpenses / budget.PlannedExpenses * 100).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
+                                             style="width: @((CalculateProgress(budgetSummaries[budget.Id].ActualExpenses, budget.PlannedExpenses)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture))%">
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
 
     private async Task SaveBudget()
     {
-    
+
 
         if (isEditing && editingBudget is not null)
         {
@@ -192,7 +192,7 @@
         budgetPendingDeletion = null;
         showDeleteConfirmation = false;
     }
-    
+
 
     private void ResetForm()
     {
@@ -217,5 +217,18 @@
 
         budgets = loadedBudgets;
         budgetSummaries = loadedSummaries;
+    }
+
+    private static decimal CalculateProgress(decimal actual, decimal planned)
+    {
+        if (planned == 0)
+        {
+            return 0;
+        }
+
+        var percentage = (actual / planned) * 100;
+
+        return Math.Clamp(percentage, 0m, 100m);
+
     }
 }

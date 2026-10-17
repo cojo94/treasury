@@ -8,6 +8,10 @@
             <div class="col-md-6">
                 <label class="form-label">End Date</label>
                 <input type="date" class="form-control" @bind="Model.EndDate" />
+                @if (!string.IsNullOrEmpty(dateValidationError))
+                {
+                    <div class="text-danger mt-1">@dateValidationError</div>
+                }
 
             </div>
             <div class="col-md-6">
@@ -28,7 +32,7 @@
         </div>
 
         <div class="mt-4 d-flex gap-2">
-            <button class="btn btn-primary" @onclick="OnSave">Save</button>
+            <button class="btn btn-primary" @onclick="HandleSaveAsync">Save</button>
             <button class="btn btn-outline-secondary" @onclick="OnCancel">Cancel</button>
         </div>
     </div>
@@ -46,4 +50,18 @@
 
     [Parameter]
     public EventCallback OnSave { get; set; }
+
+    private string? dateValidationError;
+
+    private async Task HandleSaveAsync()
+    {
+        if (Model.StartDate > Model.EndDate)
+        {
+            dateValidationError = "Budget start date must be on or before the end date";
+            return;
+        }
+
+        dateValidationError = null;
+        await OnSave.InvokeAsync();
+    }
 }
