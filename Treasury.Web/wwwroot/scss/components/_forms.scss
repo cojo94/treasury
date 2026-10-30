@@ -1,0 +1,105 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - FORMS
+// ==============================================
+
+// Form group
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-2;
+    margin-bottom: vars.$spacing-4;
+}
+
+// Labels
+.form-label {
+    font-size: vars.$font-size-sm;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$color-text;
+}
+
+// Shared input styles
+.form-control,
+.form-select {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: vars.$spacing-2 vars.$spacing-3;
+
+    font-family: vars.$font-body;
+    font-size: vars.$font-size-base;
+    color: vars.$color-text;
+
+    background-color: vars.$color-surface;
+    border: vars.$border-width solid vars.$color-border;
+    border-radius: vars.$radius-md;
+
+    transition:
+        border-color vars.$transition-fast,
+        box-shadow vars.$transition-fast;
+
+    &::placeholder {
+        color: vars.$color-text-light;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: vars.$color-secondary;
+        box-shadow: 0 0 0 3px rgba(169, 135, 82, 0.15);
+    }
+
+    &:disabled {
+        background-color: vars.$color-surface-muted;
+        color: vars.$color-text-muted;
+        cursor: not-allowed;
+    }
+}
+
+// Textarea
+textarea.form-control {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+// Checkbox and radio
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-2;
+    margin-bottom: vars.$spacing-2;
+}
+
+.form-check-input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: vars.$color-primary;
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-size: vars.$font-size-sm;
+    color: vars.$color-text;
+    cursor: pointer;
+}
+
+// Help text
+.form-text {
+    font-size: vars.$font-size-xs;
+    color: vars.$color-text-muted;
+}
+
+// Validation
+.input-validation-error {
+    border-color: vars.$color-danger;
+
+    &:focus {
+        border-color: vars.$color-danger;
+        box-shadow: 0 0 0 3px rgba(164, 71, 71, 0.12);
+    }
+}
+
+.validation-message {
+    margin-top: vars.$spacing-1;
+    font-size: vars.$font-size-xs;
+    color: vars.$color-danger;
+}

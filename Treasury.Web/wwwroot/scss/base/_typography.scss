@@ -1,0 +1,95 @@
+// ==============================================
+// TREASURY - TYPOGRAPHY
+// ==============================================
+
+@use '../abstracts/variables' as vars;
+
+
+// ----------------------------------------------
+// 1. GLOBAL TYPOGRAPHY
+// ----------------------------------------------
+
+body {
+    font-family: vars.$font-body;
+    font-size: vars.$font-size-base;
+    font-weight: vars.$font-weight-regular;
+    line-height: 1.6;
+    color: vars.$color-text;
+}
+
+
+// ----------------------------------------------
+// 2. HEADINGS
+// ----------------------------------------------
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: vars.$font-heading;
+    font-weight: vars.$font-weight-semibold;
+    line-height: 1.2;
+    color: vars.$color-text;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: vars.$font-size-3xl;
+}
+
+h2 {
+    font-size: vars.$font-size-2xl;
+}
+
+h3 {
+    font-size: vars.$font-size-xl;
+}
+
+h4 {
+    font-size: vars.$font-size-lg;
+}
+
+h5,
+h6 {
+    font-size: vars.$font-size-base;
+}
+
+
+// ----------------------------------------------
+// 3. BODY TEXT
+// ----------------------------------------------
+
+p {
+    margin-top: 0;
+    margin-bottom: vars.$spacing-4;
+}
+
+small {
+    font-size: vars.$font-size-sm;
+}
+
+strong {
+    font-weight: vars.$font-weight-semibold;
+}
+
+
+// ----------------------------------------------
+// 4. FINANCIAL FIGURES
+// ----------------------------------------------
+
+.financial-amount {
+    font-family: vars.$font-body;
+    font-weight: vars.$font-weight-semibold;
+    font-variant-numeric: tabular-nums;
+}
+
+
+// ----------------------------------------------
+// 5. MUTED TEXT
+// ----------------------------------------------
+
+.text-muted {
+    color: vars.$color-text-muted;
+}

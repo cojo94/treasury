@@ -1,0 +1,18 @@
+{
+  "name": "treasury.web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss:build": "sass wwwroot/scss/main.scss wwwroot/app.css --style=expanded",
+    "scss:watch": "sass --watch wwwroot/scss/main.scss:wwwroot/app.css --style=expanded"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.107.0"
+  }
+}

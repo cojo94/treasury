@@ -1,0 +1,84 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - BUTTONS
+// ==============================================
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-2;
+
+    padding: vars.$spacing-2 vars.$spacing-4;
+    border: vars.$border-width solid transparent;
+    border-radius: vars.$radius-md;
+
+    font-family: vars.$font-body;
+    font-size: vars.$font-size-sm;
+    font-weight: vars.$font-weight-semibold;
+    line-height: 1.5;
+
+    cursor: pointer;
+    transition:
+        background-color vars.$transition-fast,
+        border-color vars.$transition-fast,
+        color vars.$transition-fast,
+        box-shadow vars.$transition-fast;
+
+    &:focus-visible {
+        outline: 2px solid vars.$color-secondary;
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+}
+
+// Primary
+.btn-primary {
+    background-color: vars.$color-primary;
+    color: #fff;
+    border-color: vars.$color-primary;
+
+    &:hover:not(:disabled) {
+        background-color: vars.$color-primary-dark;
+        border-color: vars.$color-primary-dark;
+    }
+}
+
+// Secondary
+.btn-secondary {
+    background-color: vars.$color-surface-muted;
+    color: vars.$color-text;
+    border-color: vars.$color-border;
+
+    &:hover:not(:disabled) {
+        background-color: vars.$color-border;
+    }
+}
+
+// Outline
+.btn-outline {
+    background-color: transparent;
+    color: vars.$color-primary;
+    border-color: vars.$color-primary;
+
+    &:hover:not(:disabled) {
+        background-color: vars.$color-primary;
+        color: #fff;
+    }
+}
+
+// Danger
+.btn-danger {
+    background-color: vars.$color-danger;
+    color: #fff;
+    border-color: vars.$color-danger;
+
+    &:hover:not(:disabled) {
+        filter: brightness(0.9);
+    }
+}

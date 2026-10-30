@@ -1,0 +1,74 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - CARDS
+// ==============================================
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    background-color: vars.$color-surface;
+    border: vars.$border-width solid vars.$color-border;
+    border-radius: vars.$radius-lg;
+
+    box-shadow: vars.$shadow-sm;
+
+    transition:
+        box-shadow vars.$transition-normal,
+        border-color vars.$transition-normal;
+}
+
+// Card sections
+.card-header {
+    padding: vars.$spacing-4 vars.$spacing-5;
+    border-bottom: vars.$border-width solid vars.$color-border;
+}
+
+.card-body {
+    flex: 1;
+    padding: vars.$spacing-5;
+}
+
+.card-footer {
+    padding: vars.$spacing-4 vars.$spacing-5;
+    border-top: vars.$border-width solid vars.$color-border;
+    background-color: vars.$color-background;
+    border-radius: 0 0 vars.$radius-lg vars.$radius-lg;
+}
+
+// Card title
+.card-title {
+    margin-bottom: vars.$spacing-2;
+    font-family: vars.$font-heading;
+    font-size: vars.$font-size-xl;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$color-text;
+}
+
+// Card description
+.card-description {
+    margin-bottom: 0;
+    color: vars.$color-text-muted;
+    font-size: vars.$font-size-sm;
+}
+
+// Interactive card
+.card-interactive {
+    cursor: pointer;
+
+    &:hover {
+        border-color: vars.$color-border-strong;
+        box-shadow: vars.$shadow-md;
+    }
+
+    &:focus-visible {
+        outline: 2px solid vars.$color-secondary;
+        outline-offset: 3px;
+    }
+}
+
+// Summary card
+.card-summary {
+    border-left: 3px solid vars.$color-secondary;
+}
