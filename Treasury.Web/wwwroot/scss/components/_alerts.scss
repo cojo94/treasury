@@ -1,0 +1,81 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - ALERTS
+// ==============================================
+
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: vars.$spacing-3;
+
+    padding: vars.$spacing-4;
+    margin-bottom: vars.$spacing-4;
+
+    border: vars.$border-width solid transparent;
+    border-radius: vars.$radius-md;
+
+    font-size: vars.$font-size-sm;
+    line-height: 1.5;
+}
+
+// Success
+.alert-success {
+    color: #3F6145;
+    background-color: #EDF3EB;
+    border-color: #C9D9C5;
+}
+
+// Warning
+.alert-warning {
+    color: #765B2F;
+    background-color: #F7F1E5;
+    border-color: #E5D5B5;
+}
+
+// Danger
+.alert-danger {
+    color: #843F3F;
+    background-color: #F7EBE9;
+    border-color: #E5C7C3;
+}
+
+// Info
+.alert-info {
+    color: #4C6477;
+    background-color: #EDF1F4;
+    border-color: #CBD6DE;
+}
+
+// Alert title
+.alert-title {
+    display: block;
+    margin-bottom: vars.$spacing-1;
+    font-weight: vars.$font-weight-semibold;
+}
+
+// Alert content
+.alert-content {
+    flex: 1;
+}
+
+// Dismiss button
+.alert-dismiss {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: vars.$font-size-lg;
+    line-height: 1;
+    opacity: 0.65;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
+    }
+}

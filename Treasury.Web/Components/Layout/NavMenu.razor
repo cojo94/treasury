@@ -1,42 +1,44 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Treasury</a>
+﻿<div class="treasury-nav">
+
+    <div class="treasury-nav-brand">
+        <a href="" class="treasury-nav-brand-link">
+            <span class="treasury-nav-brand-name">Treasury</span>
+            <span class="treasury-nav-brand-subtitle">Personal Finance</span>
+        </a>
     </div>
-</div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+    <nav class="treasury-nav-links">
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+        <div class="treasury-nav-section">
+            <span class="treasury-nav-section-title">Workspace</span>
+
+            <NavLink class="treasury-nav-link" href="" Match="NavLinkMatch.All">
+                <span class="treasury-nav-icon">
+                    <i class="bi bi-grid-1x2"></i>
+                </span>
+                <span class="treasury-nav-label">Dashboard</span>
             </NavLink>
+
+            <NavLink class="treasury-nav-link" href="transactions">
+                <span class="treasury-nav-icon">
+                    <i class="bi bi-arrow-left-right"></i>
+                </span>
+                <span class="treasury-nav-label">Transactions</span>
+            </NavLink>
+
+            <NavLink class="treasury-nav-link" href="budgets">
+                <span class="treasury-nav-icon">
+                    <i class="bi bi-wallet2"></i>
+                </span>
+                <span class="treasury-nav-label">Budgets</span>
+            </NavLink>
+
         </div>
 
-        @* <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div> *@
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="transactions">
-                <span aria-hidden="true"></span> Transactions
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="budgets">
-                <span aria-hidden="true"></span> Budgets
-            </NavLink>
-        </div>
     </nav>
-</div>
 
+    <div class="treasury-nav-footer">
+        <span>Treasury · Version 1.0</span>
+    </div>
+
+</div>

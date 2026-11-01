@@ -1,0 +1,117 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - LAYOUT
+// ==============================================
+
+// Main content container
+.container {
+    width: 100%;
+    max-width: vars.$content-max-width;
+    margin-inline: auto;
+    padding-inline: vars.$spacing-5;
+}
+
+// Page wrapper
+.page-content {
+    width: 100%;
+    padding: vars.$spacing-6;
+}
+
+// Page header
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: vars.$spacing-4;
+
+    margin-bottom: vars.$spacing-8;
+}
+
+.page-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-2;
+}
+
+.page-title {
+    margin: 0;
+    font-family: vars.$font-heading;
+    font-size: vars.$font-size-3xl;
+    color: vars.$color-text;
+}
+
+.page-description {
+    margin: 0;
+    color: vars.$color-text-muted;
+    font-size: vars.$font-size-sm;
+}
+
+// Content sections
+.section {
+    margin-bottom: vars.$spacing-8;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: vars.$spacing-3;
+
+    margin-bottom: vars.$spacing-4;
+}
+
+.section-title {
+    margin: 0;
+    font-family: vars.$font-heading;
+    font-size: vars.$font-size-xl;
+    color: vars.$color-text;
+}
+
+// Grid system
+.grid {
+    display: grid;
+    gap: vars.$spacing-5;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+// Responsive layout
+@media (max-width: 992px) {
+
+    .grid-4,
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-inline: vars.$spacing-4;
+    }
+
+    .page-content {
+        padding: vars.$spacing-4;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}

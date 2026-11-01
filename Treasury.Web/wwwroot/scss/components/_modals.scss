@@ -1,0 +1,144 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - MODALS
+// ==============================================
+
+// Overlay
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: vars.$z-index-modal;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: vars.$spacing-4;
+
+    background-color: rgba(30, 20, 22, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+// Modal container
+.modal-dialog {
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100vh - 2rem);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background-color: vars.$color-surface;
+    border: vars.$border-width solid vars.$color-border;
+    border-radius: vars.$radius-xl;
+    box-shadow: vars.$shadow-lg;
+
+    animation: modal-enter 180ms ease-out;
+}
+
+// Larger modal
+.modal-dialog-lg {
+    max-width: 720px;
+}
+
+// Modal header
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: vars.$spacing-4;
+
+    padding: vars.$spacing-5;
+
+    border-bottom: vars.$border-width solid vars.$color-border;
+}
+
+.modal-title {
+    margin: 0;
+
+    font-family: vars.$font-heading;
+    font-size: vars.$font-size-2xl;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$color-text;
+}
+
+// Close button
+.modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    padding: 0;
+
+    border: none;
+    border-radius: vars.$radius-sm;
+
+    background: transparent;
+    color: vars.$color-text-muted;
+
+    font-size: vars.$font-size-xl;
+    cursor: pointer;
+
+    transition:
+        background-color vars.$transition-fast,
+        color vars.$transition-fast;
+
+    &:hover {
+        background-color: vars.$color-surface-muted;
+        color: vars.$color-text;
+    }
+
+    &:focus-visible {
+        outline: 2px solid vars.$color-secondary;
+        outline-offset: 2px;
+    }
+}
+
+// Modal body
+.modal-body {
+    flex: 1;
+    min-height: 0;
+
+    padding: vars.$spacing-5;
+
+    overflow-y: auto;
+}
+
+// Modal footer
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: vars.$spacing-3;
+
+    padding: vars.$spacing-4 vars.$spacing-5;
+
+    border-top: vars.$border-width solid vars.$color-border;
+    background-color: vars.$color-background;
+}
+
+// Entry animation
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+    .modal-dialog {
+        animation: none;
+    }
+}

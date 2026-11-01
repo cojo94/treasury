@@ -1,0 +1,136 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - APP LAYOUT
+// ==============================================
+
+// Main application layout
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: vars.$color-background;
+}
+
+// Sidebar
+.app-sidebar {
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 vars.$sidebar-width;
+    width: vars.$sidebar-width;
+    height: 100vh;
+
+    background-color: vars.$color-primary-dark;
+    color: vars.$color-surface;
+
+    overflow-y: auto;
+}
+
+// Main content area
+.app-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+// Topbar
+.app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: vars.$z-index-sticky;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    min-height: 3.5rem;
+    padding: 0 vars.$spacing-6;
+
+    background-color: vars.$color-surface;
+    border-bottom: vars.$border-width solid vars.$color-border;
+}
+
+// Main page content
+.app-content {
+    flex: 1;
+    width: 100%;
+    max-width: vars.$content-max-width;
+
+    margin-inline: auto;
+    padding: vars.$spacing-8;
+}
+
+// Mobile menu toggle
+.app-menu-toggle {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    padding: 0;
+
+    border: vars.$border-width solid vars.$color-border;
+    border-radius: vars.$radius-md;
+
+    background-color: vars.$color-surface;
+    color: vars.$color-text;
+
+    font-size: vars.$font-size-lg;
+    cursor: pointer;
+
+    &:hover {
+        background-color: vars.$color-surface-muted;
+    }
+
+    &:focus-visible {
+        outline: 2px solid vars.$color-secondary;
+        outline-offset: 2px;
+    }
+}
+
+// ==============================================
+// RESPONSIVE LAYOUT
+// ==============================================
+
+// Tablet
+@media (max-width: 992px) {
+    .app-sidebar {
+        flex-basis: 80px;
+        width: 80px;
+    }
+
+    .app-content {
+        padding: vars.$spacing-6;
+    }
+}
+
+// Mobile
+@media (max-width: 640px) {
+    .app-layout {
+        display: block;
+    }
+
+    .app-sidebar {
+        display: none;
+    }
+
+    .app-menu-toggle {
+        display: inline-flex;
+    }
+
+    .app-topbar {
+        padding-inline: vars.$spacing-4;
+    }
+
+    .app-content {
+        padding: vars.$spacing-4;
+    }
+}

@@ -1,0 +1,65 @@
+@use '../abstracts/variables' as vars;
+
+// ==============================================
+// TREASURY - BADGES
+// ==============================================
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-1;
+
+    padding: vars.$spacing-1 vars.$spacing-2;
+
+    border: vars.$border-width solid transparent;
+    border-radius: vars.$radius-sm;
+
+    font-family: vars.$font-body;
+    font-size: vars.$font-size-xs;
+    font-weight: vars.$font-weight-semibold;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+// Success
+.badge-success {
+    color: #3F6145;
+    background-color: #EDF3EB;
+    border-color: #C9D9C5;
+}
+
+// Warning
+.badge-warning {
+    color: #765B2F;
+    background-color: #F7F1E5;
+    border-color: #E5D5B5;
+}
+
+// Danger
+.badge-danger {
+    color: #843F3F;
+    background-color: #F7EBE9;
+    border-color: #E5C7C3;
+}
+
+// Info
+.badge-info {
+    color: #4C6477;
+    background-color: #EDF1F4;
+    border-color: #CBD6DE;
+}
+
+// Neutral
+.badge-neutral {
+    color: vars.$color-text-muted;
+    background-color: vars.$color-surface-muted;
+    border-color: vars.$color-border;
+}
+
+// Primary
+.badge-primary {
+    color: vars.$color-primary;
+    background-color: #F3E9EC;
+    border-color: #E2CDD2;
+}

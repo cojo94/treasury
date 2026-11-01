@@ -481,5 +481,7 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
-# Sass
+# Sass generated files
 *.css.map
+*.sass.map
+*.scss.map

@@ -1,8 +1,17 @@
 // Treasury - Main stylesheet
 
 @use 'abstracts/variables';
+
 @use 'base/reset';
 @use 'base/typography';
+
 @use 'components/buttons';
 @use 'components/cards';
 @use 'components/forms';
+@use 'components/alerts';
+@use 'components/badges';
+@use 'components/modals';
+@use 'components/progress';
+
+@use 'layout/layout';
+@use 'layout/app-layout';
