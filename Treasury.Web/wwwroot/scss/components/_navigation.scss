@@ -1,0 +1,123 @@
+@use '../abstracts/variables' as vars;
+
+/* ==============================================
+   TREASURY - NAVIGATION MENU
+   ============================================== */
+
+.treasury-nav {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: vars.$spacing-5 vars.$spacing-3;
+}
+
+/* Brand */
+.treasury-nav-brand {
+    padding: vars.$spacing-3 vars.$spacing-3 vars.$spacing-6;
+}
+
+.treasury-nav-brand-link {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-1;
+    text-decoration: none;
+}
+
+.treasury-nav-brand-name {
+    font-family: vars.$font-heading;
+    font-size: vars.$font-size-2xl;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: vars.$color-surface;
+}
+
+.treasury-nav-brand-subtitle {
+    font-size: vars.$font-size-xs;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: vars.$color-secondary-light;
+}
+
+/* Navigation */
+.treasury-nav-links {
+    flex: 1;
+}
+
+.treasury-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-1;
+}
+
+.treasury-nav-section-title {
+    padding: 0 vars.$spacing-3;
+    margin-bottom: vars.$spacing-2;
+    font-size: vars.$font-size-xs;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: vars.$color-secondary-light;
+}
+
+/* Navigation links */
+.treasury-nav-links .treasury-nav-link {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-3;
+    min-height: 2.75rem;
+    padding: vars.$spacing-2 vars.$spacing-3;
+    border-radius: vars.$radius-md;
+    color: rgba(255, 252, 248, 0.65);
+    background-color: transparent;
+    text-decoration: none;
+    font-size: vars.$font-size-sm;
+    font-weight: vars.$font-weight-medium;
+    transition: background-color vars.$transition-fast, color vars.$transition-fast;
+}
+
+.treasury-nav-links .treasury-nav-link:hover {
+    background-color: #75404D;
+    color: vars.$color-surface;
+}
+
+.treasury-nav-links .treasury-nav-link.active {
+    background-color: vars.$color-secondary;
+    color: vars.$color-surface;
+    font-weight: vars.$font-weight-bold;
+}
+
+.treasury-nav-links .treasury-nav-link:focus-visible {
+    outline: 2px solid vars.$color-secondary-light;
+    outline-offset: 2px;
+}
+
+/* Icons */
+.treasury-nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 1.25rem;
+    font-size: vars.$font-size-lg;
+    color: vars.$color-secondary-light;
+}
+
+.treasury-nav-links .treasury-nav-link.active .treasury-nav-icon {
+    color: vars.$color-surface;
+}
+
+/* Labels */
+.treasury-nav-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Footer */
+.treasury-nav-footer {
+    padding: vars.$spacing-4 vars.$spacing-3 vars.$spacing-2;
+    margin-top: vars.$spacing-6;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: vars.$font-size-xs;
+    color: rgba(255, 252, 248, 0.55);
+}
